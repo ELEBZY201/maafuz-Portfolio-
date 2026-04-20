@@ -115,6 +115,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -394,8 +395,27 @@ export default function Home() {
                   padding: "12px 16px", color: "#e2e8f0", fontSize: 14, fontFamily: "inherit",
                   outline: "none", width: "100%", resize: "vertical"
                 }} />
+              {error && <p style={{ color: '#ff6b6b', fontSize: 14, marginTop: 8 }}>{error}</p>}
               <button className="btn-primary" style={{ width: "100%", padding: 14, fontSize: 13 }}
-                onClick={() => { if (formData.name && formData.email && formData.message) setSent(true); }}>
+                onClick={async () => {
+                  if (!formData.name || !formData.email || !formData.message) return;
+                  setError("");
+                  try {
+                    const res = await fetch('/api/contact', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(formData)
+                    });
+                    if (res.ok) {
+                      setSent(true);
+                      setFormData({ name: "", email: "", message: "" });
+                    } else {
+                      setError("Failed to send message. Please try again.");
+                    }
+                  } catch (err) {
+                    setError("Network error. Please try again.");
+                  }
+                }}>
                 Send Message →
               </button>
             </div>
