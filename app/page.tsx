@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { ProjectCard } from "../ProjectCard";
 
 const SKILLS = [
   { name: "React.js", level: 92 }, { name: "Node.js", level: 90 },
@@ -9,20 +10,50 @@ const SKILLS = [
   { name: "Python", level: 78 }, { name: "CI/CD (GitHub Actions)", level: 87 },
 ];
 
-const PROJECTS = [
+type Project = {
+  name: string;
+  desc: string;
+  techStack: string[];
+  live: string;
+  github: string;
+  metric: string;
+  highlight?: boolean;
+  stats?: { value: string; label: string }[];
+  features?: string[];
+};
+
+const PROJECTS: Project[] = [
   {
     name: "Kimera-AI",
     desc: "AI-powered LinkedIn post generator with viral scoring, voice cloning, content calendar, and 3-tier subscription system. Built with Claude API and deployed on Vercel.",
-    tags: ["Next.js", "Claude API", "Node.js", "Vercel"],
+    techStack: ["Next.js", "Claude API", "Node.js", "Vercel"],
     live: "https://kimera-ai.vercel.app",
     github: "https://github.com/ELEBZY201/kimera-ai",
     metric: "Live · $9/mo SaaS",
     highlight: true,
   },
   {
+    name: "Eazitool",
+    desc: "Online file conversion, image enhancement, and CV optimization toolkit built for speed and zero-friction usage in the browser.",
+    techStack: ["Next.js", "TypeScript", "Node.js", "AI APIs", "Vercel"],
+    live: "https://eazitool.vercel.app",
+    github: "https://github.com/ELEBZY201",
+    metric: "10K Daily · 50 Tools",
+    stats: [
+      { value: "10K", label: "Daily" },
+      { value: "50", label: "Tools" },
+      { value: "<30s", label: "Avg Time" },
+    ],
+    features: [
+      "PDF converter for quick document format workflows",
+      "AI image upscaler that improves quality with minimal blur",
+      "ATS CV tool for screening-ready resume formatting",
+    ],
+  },
+  {
     name: "WazobiaMail",
     desc: "Nigerian-focused email platform serving local users with reliable, fast web mail. Contributed to frontend and API integration across the platform.",
-    tags: ["React.js", "Node.js", "REST APIs"],
+    techStack: ["React.js", "Node.js", "REST APIs"],
     live: "https://www.wazobiamail.com",
     github: "https://github.com/ELEBZY201",
     metric: "Production · Live",
@@ -30,7 +61,7 @@ const PROJECTS = [
   {
     name: "Revv — Car Auction",
     desc: "Full frontend for a high-end classic car auction platform with live listings, bid management, real-time status updates, and a premium results dashboard.",
-    tags: ["React.js", "Node.js", "REST APIs"],
+    techStack: ["React.js", "Node.js", "REST APIs"],
     live: "#",
     github: "https://github.com/ELEBZY201",
     metric: "Premium UI · Built",
@@ -38,7 +69,7 @@ const PROJECTS = [
   {
     name: "Kalvox AI",
     desc: "Autonomous AI cold-calling platform targeting Nigerian bank executives. Built full frontend and API integration layer with voice cloning and prospect enrichment.",
-    tags: ["React.js", "Node.js", "AI Integration"],
+    techStack: ["React.js", "Node.js", "AI Integration"],
     live: "#",
     github: "https://github.com/ELEBZY201",
     metric: "AI-Powered · Sales",
@@ -195,8 +226,9 @@ export default function Home() {
           </h2>
           <p className="animate-fade-up" style={{ fontSize: 16, color: "#94a3b8", lineHeight: 1.8, maxWidth: 560, marginBottom: 40, animationDelay: "0.3s", opacity: 0 }}>
             4+ years building scalable web applications and cloud infrastructure. 
-            92% deployment automation, 67% downtime reduction. Currently building 
-            <span style={{ color: "#00d4d4" }}> Kimera-AI</span> — a live SaaS product.
+            92% deployment automation, 67% downtime reduction. Currently building
+            <span style={{ color: "#00d4d4" }}> Kimera-AI</span> and
+            <span style={{ color: "#00d4d4" }}> Eazitool</span>.
           </p>
           <div className="animate-fade-up" style={{ display: "flex", gap: 16, flexWrap: "wrap", animationDelay: "0.4s", opacity: 0 }}>
             <button className="btn-primary" onClick={() => scrollTo("projects")}>View My Work</button>
@@ -206,7 +238,7 @@ export default function Home() {
 
           {/* Stats */}
           <div className="animate-fade-up" style={{ display: "flex", gap: 40, marginTop: 60, flexWrap: "wrap", animationDelay: "0.5s", opacity: 0 }}>
-            {[["92%","Deployment Automation"],["67%","Downtime Reduction"],["82%","Security Improvement"],["4+","Years Experience"]].map(([v, l]) => (
+            {[["92%","Deployment Automation"],["67%","Downtime Reduction"],["82%","Security Improvement"],["10K+","Daily Ops"],["4+","Years Experience"]].map(([v, l]) => (
               <div key={l}>
                 <div style={{ fontSize: 32, fontWeight: 900, color: "#00d4d4", fontFamily: "'JetBrains Mono'" }}>{v}</div>
                 <div style={{ fontSize: 12, color: "#64748b", marginTop: 4 }}>{l}</div>
@@ -292,36 +324,18 @@ export default function Home() {
         </h2>
         <div className="projects-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
           {PROJECTS.map((p) => (
-            <div key={p.name} className="card" style={{
-              padding: 28,
-              border: p.highlight ? "1px solid rgba(0,212,212,0.4)" : "1px solid #1e3a5f",
-              position: "relative", overflow: "hidden"
-            }}>
-              {p.highlight && (
-                <div style={{
-                  position: "absolute", top: 16, right: 16,
-                  background: "rgba(0,212,212,0.1)", border: "1px solid rgba(0,212,212,0.3)",
-                  borderRadius: 4, padding: "3px 10px",
-                  fontFamily: "'JetBrains Mono'", fontSize: 10, color: "#00d4d4", letterSpacing: "0.1em"
-                }}>FEATURED</div>
-              )}
-              <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, color: "#00d4d4", marginBottom: 8, letterSpacing: "0.1em" }}>
-                {p.metric}
-              </div>
-              <h3 style={{ fontSize: 20, fontWeight: 700, color: "#e2e8f0", marginBottom: 12 }}>{p.name}</h3>
-              <p style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.7, marginBottom: 20 }}>{p.desc}</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24 }}>
-                {p.tags.map(t => <span key={t} className="tag">{t}</span>)}
-              </div>
-              <div style={{ display: "flex", gap: 12 }}>
-                {p.live !== "#" && (
-                  <button className="btn-primary" style={{ fontSize: 11, padding: "8px 16px" }}
-                    onClick={() => window.open(p.live, "_blank")}>Live ↗</button>
-                )}
-                <button className="btn-secondary" style={{ fontSize: 11, padding: "8px 16px" }}
-                  onClick={() => window.open(p.github, "_blank")}>GitHub</button>
-              </div>
-            </div>
+            <ProjectCard
+              key={p.name}
+              title={p.name}
+              description={p.desc}
+              liveUrl={p.live}
+              githubUrl={p.github}
+              metric={p.metric}
+              techStack={p.techStack}
+              highlight={p.highlight}
+              stats={p.stats}
+              features={p.features}
+            />
           ))}
         </div>
       </section>
