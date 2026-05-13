@@ -24,6 +24,14 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
+    name: "Stitch Boss",
+    desc: "A comprehensive tailoring platform that provides a complete ecosystem for tailors, connecting clients with skilled artisans through an intuitive digital marketplace. Features include order management, measurement tracking, fabric inventory, payment processing, and real-time communication between clients and tailors.",
+    techStack: ["Next.js", "React.js", "Node.js", "PostgreSQL", "Vercel"],
+    live: "https://stitch-boss.vercel.app/login",
+    github: "https://github.com/ELEBZY201/stitch-boss",
+    metric: "Live · Tailoring Platform",
+  },
+  {
     name: "Kimera-AI",
     desc: "AI-powered LinkedIn post generator with viral scoring, voice cloning, content calendar, and 3-tier subscription system. Built with Claude API and deployed on Vercel.",
     techStack: ["Next.js", "Claude API", "Node.js", "Vercel"],
