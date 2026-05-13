@@ -394,7 +394,13 @@ export default function Home() {
         {sent ? (
           <div className="card" style={{ padding: 32 }}>
             <div style={{ fontSize: 32, marginBottom: 12 }}>✓</div>
-            <p style={{ color: "#00d4d4", fontFamily: "'JetBrains Mono'", fontSize: 14 }}>Message sent! I'll reply within 24 hours.</p>
+            <p style={{ color: "#00d4d4", fontFamily: "'JetBrains Mono'", fontSize: 14, marginBottom: 8 }}>
+              Message sent! Check your email for confirmation.
+            </p>
+            <p style={{ color: "#94a3b8", fontSize: 13, lineHeight: 1.5 }}>
+              I've received your message and sent you a confirmation email.
+              I'll personally reply within 24 hours.
+            </p>
           </div>
         ) : (
           <div className="card" style={{ padding: 32, textAlign: "left" }}>
